@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import time
 import matplotlib.pyplot as plt
 
+return checking
 def get(url):
     response = requests.get(url)
     response.raise_for_status()
