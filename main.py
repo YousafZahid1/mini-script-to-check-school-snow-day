@@ -4,6 +4,13 @@ import time
 import matplotlib.pyplot as plt
 
 
+DISTRICTS = {
+    "FCPS": "https://www.fcps.edu/",
+    "LCPS": "https://www.lcps.org/",
+    "APS": "https://www.apsva.us/",
+}
+
+
 def get(url):
     response = requests.get(url)
     response.raise_for_status()
@@ -19,14 +26,26 @@ def get(url):
     return "n"
 
 
-url = "https://www.fcps.edu/"
 while True:
-    status = get(url)
-    print("FCPS status:", status)
+    alerts = {}
+    for name, url in DISTRICTS.items():
+        try:
+            status = get(url)
+        except requests.RequestException as e:
+            status = f"error: {e}"
+        print(f"{name} status: {status}")
+        if status != "n":
+            alerts[name] = status
 
-    if status != "n":
-        plt.plot([1, 2, 3], [1, 2, 3])
-        plt.title(f"FCPS Status Alert: {status}")
+    if alerts:
+        labels = list(alerts.keys())
+        fig, ax = plt.subplots()
+        ax.barh(labels, [1] * len(labels), color="red")
+        ax.set_xlabel("Alert")
+        title = ", ".join(f"{k}: {v}" for k, v in alerts.items())
+        ax.set_title(f"Snow Day Alert: {title}")
+        plt.tight_layout()
         plt.show()
-        break 
+        break
+
     time.sleep(600)
