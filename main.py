@@ -21,11 +21,10 @@ def get(url):
         print(f"Request failed for {url}: {e}")
         return "n"
 
-# Dictionary mapping district names to their URLs
 districts = {
     "FCPS": "https://www.fcps.edu/",
-    "LCP": "https://www.lcps.org/",  # Assuming this is the correct URL for LCP
-    "Arlington County": "https://www.apsva.us/"  # Assuming this is the correct URL for Arlington County
+    "LCP": "https://www.lcps.org/",
+    "Arlington County": "https://www.apsva.us/"
 }
 
 while True:
